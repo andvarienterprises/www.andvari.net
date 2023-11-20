@@ -1,6 +1,6 @@
 baseURL: 'http://www.andvari.net/'
 languageCode: 'en-us'
-title:  "Dave O'Connor"
+title:  "Andvari Enterprises"
 theme: 'PaperMod'
 
 enableRobotsTXT: true
@@ -16,8 +16,8 @@ minify:
 
 params:
  env: production # to enable google analytics, opengraph, twitter-cards and schema.
- title: "Dave O'Connor"
- description: "Dave O'Connor"
+ title: "Andvari Enterprises"
+ description: "Andvari Enterprises"
  keywords: [Portfolio, PaperMod]
  author: Me
  # author: ["Me", "You"] # multiple authors
@@ -58,15 +58,17 @@ params:
  # profile-mode
  profileMode:
    enabled: true # needs to be explicitly set
-   title: Dave O'Connor
-   subtitle: "Engineering Leader, Coach, Human"
-   imageUrl: "/images/mysteriousd.png"
+   title: Andvari Enterprises
+   subtitle: "Technical Leadership, Growth Advice, Coaching"
+   imageUrl: "/images/andvarilogo.png"
    imageWidth: 120
    imageHeight: 120
    imageTitle: my image
    buttons:
      - name: Profile
        url: https://log.andvari.net/pages/about.html
+     - name: Coaching Services
+       url: https://www.strategichopes.co/
      - name: Log
        url: https://log.andvari.net/
 
