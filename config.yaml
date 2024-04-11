@@ -67,8 +67,10 @@ params:
    buttons:
      - name: Profile
        url: https://log.andvari.net/pages/about.html
-     - name: Coaching Services
+     - name: Coaching
        url: https://www.strategichopes.co/
+     - name: Consultancy
+       url: https://coservant.systems/
      - name: Log
        url: https://log.andvari.net/
 
