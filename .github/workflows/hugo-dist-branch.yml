@@ -1,0 +1,50 @@
+name: Hugo build-on-change publishing to dist branch
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'content/**'
+      - 'layouts/**'
+      - 'data/**'
+      - 'archetypes/**'
+      - 'themes/**'
+      - 'config.yaml'
+      - '.gitmodules'
+      - '.github/workflows/hugo-dist-branch.yml'
+
+# Only ever one publish in flight; a newer build supersedes an older one.
+concurrency:
+  group: dist-branch
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'write'
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+    - uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: '0.164.0'
+        extended: true
+    - name: Build
+      run: hugo --minify --buildDrafts
+    - name: Publish to dist branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -euo pipefail
+        # A fresh repo inside public/ means dist never accumulates history:
+        # every publish is a single commit, force-pushed over the last one.
+        git -C public init -q -b dist
+        git -C public config user.name 'github-actions[bot]'
+        git -C public config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git -C public add -A
+        git -C public commit -q -m "Build site from ${GITHUB_SHA}"
+        git -C public push -q --force \
+          "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" dist
